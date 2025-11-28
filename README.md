@@ -8,7 +8,7 @@ Estrutura de pastas
 - `fotos/comparacao`: coloque aqui pelo menos duas imagens (`.jpg`, `.jpeg`, `.png`, `.bmp`). O script usa as duas primeiras em ordem alfabética.
 - `fotos/resultado_correlacao`: pasta de saída. Será criada automaticamente. O arquivo gerado é `resultado.jpg` com as correspondências desenhadas.
 
-Preparação do ambiente (Windows PowerShell v5.1)
+Preparação do ambiente
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
@@ -33,8 +33,22 @@ Como funciona
 - Visualização: desenha as correspondências aprovadas com `cv2.drawMatches`.
 - Saída: cria a pasta de resultado se necessário e grava `resultado.jpg`.
 
+Resultados:
+
+Imagens para comparação
+
+  - Imagem 1:
+  
+<img width="1086" height="652" alt="image" src="https://github.com/user-attachments/assets/f3583a07-40f2-4271-a44d-8dba70b99a97" />
+
+  - Imagem 2:
+
+<img width="239" height="324" alt="image" src="https://github.com/user-attachments/assets/df8ee406-078c-4df6-a6b2-df542cdbd691" />
+
+  Resultado:
+
+<img width="321" height="328" alt="image" src="https://github.com/user-attachments/assets/0b750cec-6d20-49cb-9adb-555c1cbfdb76" />
+
 Observações
 - Para melhores resultados, use imagens com conteúdo rico em textura.
 - Se houver mais de duas imagens na pasta de comparação, apenas as duas primeiras em ordem alfabética serão utilizadas.
-
-# pontos-correlacao
