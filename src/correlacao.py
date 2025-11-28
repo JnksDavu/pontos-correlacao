@@ -29,14 +29,29 @@ def encontrar_correspondencias(descritores_a, descritores_b):
       aprovados.append(melhor)
   return pares, aprovados
 
-def desenhar_resultado(img_a, kp_a, img_b, kp_b, matches_filtrados):
-  return cv2.drawMatches(
-    img_a, kp_a,
-    img_b, kp_b,
-    matches_filtrados,
-    None,
-    flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS
-  )
+def desenhar_resultado(img_a, kp_a, img_b, kp_b, matches_filtrados, espessura_linha=2):
+  # Converte para BGR para desenhar em cores
+  vis_a = cv2.cvtColor(img_a, cv2.COLOR_GRAY2BGR)
+  vis_b = cv2.cvtColor(img_b, cv2.COLOR_GRAY2BGR)
+
+  altura = max(vis_a.shape[0], vis_b.shape[0])
+  largura_total = vis_a.shape[1] + vis_b.shape[1]
+  canvas = np.zeros((altura, largura_total, 3), dtype=np.uint8)
+  canvas[0:vis_a.shape[0], 0:vis_a.shape[1]] = vis_a
+  canvas[0:vis_b.shape[0], vis_a.shape[1]:vis_a.shape[1]+vis_b.shape[1]] = vis_b
+
+  desloc_x = vis_a.shape[1]
+
+  for m in matches_filtrados:
+    pt_a = tuple(map(int, kp_a[m.queryIdx].pt))
+    pt_b = tuple(map(int, kp_b[m.trainIdx].pt))
+    pt_b_desloc = (pt_b[0] + desloc_x, pt_b[1])
+
+    cv2.circle(canvas, pt_a, 4, (0, 255, 0), -1)
+    cv2.circle(canvas, pt_b_desloc, 4, (0, 255, 0), -1)
+    cv2.line(canvas, pt_a, pt_b_desloc, (255, 0, 0), espessura_linha, cv2.LINE_AA)
+
+  return canvas
 
 def analisar_pares(caminho_a, caminho_b, destino):
   img_a = verificar_e_carregar(caminho_a)
